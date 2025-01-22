@@ -1,0 +1,28 @@
+<div class="text-wrap" *ngIf="showInput">
+    <label for="text-area">Please enter the text you want to search and replace</label>
+    <textarea id="text-area" rows="6" cols="100" [(ngModel)]="text"></textarea>
+
+    <div class="button-wrap">
+        <button type="button" (click)="continue()" [disabled]="text.length === 0">Continue</button>
+        <button type="button" (click)="generateString()">Generate String</button>
+    </div>
+</div>
+
+
+<ng-container *ngIf="!showInput">
+
+    <div class="input-wrap">
+        <input type="text" placeholder="Find" [(ngModel)]="find">
+        <div class="replace-wrap">
+            <input type="text" placeholder="Replace" [disabled]="!find" [(ngModel)]="replace">
+            <button type="button" [disabled]="!find || !replace" (click)="replaceText()">Replace</button>
+            <button type="button" [disabled]="!find || !replace" (click)="replaceAllText()">Replace All</button>
+        </div>
+    </div>
+
+    <div class="string-wrap">
+        <div [innerHTML]="getHighlightedText()"></div>
+    </div>
+
+
+</ng-container>
