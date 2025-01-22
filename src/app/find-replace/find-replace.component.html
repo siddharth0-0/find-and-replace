@@ -1,28 +1,38 @@
 <div class="text-wrap" *ngIf="showInput">
     <label for="text-area">Please enter the text you want to search and replace</label>
-    <textarea id="text-area" rows="6" cols="100" [(ngModel)]="text"></textarea>
+    <div class="text-area-wrap">
+        <textarea id="text-area" rows="6" [(ngModel)]="text"></textarea>
+        <span *ngIf="text.length > 0">{{text.length}} characters</span>
+    </div>
 
     <div class="button-wrap">
         <button type="button" (click)="continue()" [disabled]="text.length === 0">Continue</button>
-        <button type="button" (click)="generateString()">Generate String</button>
+        <button type="button" (click)="generateString()">Generate string</button>
     </div>
 </div>
 
 
 <ng-container *ngIf="!showInput">
-
-    <div class="input-wrap">
-        <input type="text" placeholder="Find" [(ngModel)]="find">
-        <div class="replace-wrap">
-            <input type="text" placeholder="Replace" [disabled]="!find" [(ngModel)]="replace">
+    <div class="result-wrap">
+        <div class="input-wrap">
+            <input type="text" placeholder="Word to find" [(ngModel)]="find">
+            <input type="text" placeholder="Word to replace" [disabled]="!find" [(ngModel)]="replace">
+        </div>
+        <div class="replace-btn-wrap">
             <button type="button" [disabled]="!find || !replace" (click)="replaceText()">Replace</button>
+            <span>OR</span>
             <button type="button" [disabled]="!find || !replace" (click)="replaceAllText()">Replace All</button>
         </div>
+    
+        <div class="se-text-box">
+            <div class="string-wrap">
+                <div [innerHTML]="getHighlightedText()"></div>
+            </div>
+
+            <div class="text-action">
+                <span class="edit-text" (click)="editText()">Edit text</span>
+                <span *ngIf="find.length > 0">{{getMatchCount()}} matches found</span>
+            </div>
+        </div>
     </div>
-
-    <div class="string-wrap">
-        <div [innerHTML]="getHighlightedText()"></div>
-    </div>
-
-
 </ng-container>

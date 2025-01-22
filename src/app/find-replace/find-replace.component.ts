@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class FindReplaceComponent implements OnInit {
 
-  text: string = '';
+  text: string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 
   showInput: boolean = true;
 
@@ -60,6 +60,20 @@ export class FindReplaceComponent implements OnInit {
     if (!this.find || !this.replace) return;
     const regex = new RegExp(this.escapeRegExp(this.find), 'g');
     this.text = this.text.replace(regex, this.replace);
+    this.replace = '';
+  }
+
+  getMatchCount(): number {
+    if (!this.find || !this.text) return 0;
+    
+    const regex = new RegExp(this.escapeRegExp(this.find), 'gi');
+    const matches = this.text.match(regex);
+    return matches ? matches.length : 0;
+  }
+
+  editText() {
+    this.showInput = true;
+    this.find = '';
     this.replace = '';
   }
 }
